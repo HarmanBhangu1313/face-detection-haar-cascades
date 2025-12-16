@@ -16,6 +16,64 @@ The project focuses on understanding **traditional face detection techniques** r
 - Face and eye detection pipeline
 
 ---
+##  Mathematical Intuition (Haar Cascade Face Detection)
+
+###  Haar-Like Features
+Haar Cascade face detection works by measuring **intensity differences** between adjacent rectangular regions of an image.
+
+A Haar feature simply subtracts the sum of pixel values in one region from another.  
+These differences capture basic visual patterns such as:
+- Edges
+- Lines
+- Center–surround contrasts  
+
+Human faces have consistent intensity patterns (for example, eyes are usually darker than cheeks), which makes these features effective.
+
+---
+
+###  Integral Image (Why Detection Is Fast)
+To compute rectangular intensity sums efficiently, an **integral image** is used.
+
+The integral image stores cumulative pixel sums so that the total intensity of any rectangular region can be calculated in **constant time**, regardless of its size.
+
+This allows thousands of Haar features to be evaluated extremely quickly, enabling **real-time face detection**.
+
+---
+
+###  Boosted Weak Classifiers (AdaBoost)
+Each Haar feature on its own is a **weak classifier**, meaning it performs only slightly better than random guessing.
+
+AdaBoost combines many such weak classifiers into a **strong classifier** by:
+- Selecting the most informative features
+- Assigning higher importance to features that classify faces more accurately
+
+This results in a robust face detector built from simple components.
+
+---
+
+###  Cascade of Classifiers
+Instead of applying all classifiers everywhere, Haar Cascades use a **cascade structure**:
+
+- Early stages use a small number of features to quickly reject non-face regions
+- Later stages apply more features only to promising regions
+
+A detection window is accepted as a face only if it passes **all stages** of the cascade, making the algorithm both fast and efficient.
+
+---
+
+### Multi-Scale Detection
+Faces appear at different sizes in images.  
+To handle this, the detector scans the image at multiple scales using a sliding window approach.
+
+---
+
+### Key Limitations
+Haar Cascade face detection is sensitive to:
+- Lighting variations
+- Pose changes
+- Occlusions
+
+Despite these limitations, it remains a fast and effective method for face detection in controlled environments.
 
 ##  Tech Stack
 - **Python**
